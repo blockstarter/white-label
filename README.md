@@ -57,7 +57,12 @@ blockstarter.auth({
 
 ####  Get Dashboard
 
-Information about Totals, Rates, Currencies, etc.
+Information about Totals, Rates, Currencies, etc. in order to build a main screen where contributor can 
+
+1. get address to send money
+2. check his transactions
+3. check common information about project
+4. get total raised (progress)
 
 ```Javascript
   
