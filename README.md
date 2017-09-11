@@ -37,11 +37,13 @@ if (storage.apiKey == null) {
 }
 
 blockstarter.auth({
+
   email: 'test@test.com',
   password: 'unique password',
   project: 'KickCity',
   reference: 'traffic-source',
   apiKey: storage.apiKey
+
 }, function(err, session){
       if (err != null) {
         throw err;
@@ -123,6 +125,7 @@ if (storage.sessionId == null) {
 if (storage.apiKey == null) {
   throw "API Key is required";
 }
+
 blockstarter.helpMe(storage, function(err, info){
   if (err != null) {
     throw err;
