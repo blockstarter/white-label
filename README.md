@@ -100,9 +100,7 @@ if (storage.dashboard == null) {
   throw "Dashboard is required";
 }
 
-var type = 'ltc';
-
-var request = (storage.type = type, storage);
+var request =  Object.assign({}, storage, { type: 'ltc' });
 
 blockstarter.address(request, function(err, addressInfo){
   if (err != null) {
