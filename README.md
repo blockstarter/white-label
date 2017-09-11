@@ -48,9 +48,11 @@ blockstarter.auth({
       if (err != null) {
         throw err;
       }
+      
       if (session.sessionId == null) {
         throw "Session ID is missing";
       }
+      
       storage.sessionId = session.sessionId;
       console.log(session.sessionId);
 });
@@ -80,7 +82,9 @@ blockstarter.panel(storage, function(err, dashboard){
   if (err != null) {
     throw err;
   }
+  
   storage.dashboard = dashboard;
+  
   console.log(dashboard);
 });
 ```  
@@ -95,9 +99,11 @@ Get [btc, ltc, eth, waves, dash, zec] address
 if (storage.sessionId == null) {
   throw "Session is required";
 }
+
 if (storage.apiKey == null) {
   throw "API Key is required";
 }
+
 if (storage.dashboard == null) {
   throw "Dashboard is required";
 }
@@ -122,6 +128,7 @@ User can ask for help and admin will contact him by email
 if (storage.sessionId == null) {
   throw "Session is required";
 }
+
 if (storage.apiKey == null) {
   throw "API Key is required";
 }
