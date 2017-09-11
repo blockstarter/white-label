@@ -17,7 +17,8 @@ First of all define a storage
 
 var storage = {
     sessionId: null,
-    apiKey: 'TEST-APIKEY'
+    apiKey: 'TEST-APIKEY',
+    dashboard: null
   };
 
 ```
