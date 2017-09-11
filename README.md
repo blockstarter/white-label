@@ -15,8 +15,7 @@ First of all define a storage
 
 ```Javascript
 
-var storage;
-  storage = {
+var storage = {
     sessionId: null,
     apiKey: 'TEST-APIKEY'
   };
