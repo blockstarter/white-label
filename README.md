@@ -6,7 +6,7 @@ This is library helps to integrate blockstarter with client's dashboard
 ## Install 
 
 ```
-npm i blockstarter-whitelabel
+npm i blockstarter-wl
 ```
 
 ## Usage
