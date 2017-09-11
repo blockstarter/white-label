@@ -1,6 +1,6 @@
 {
   "name": "blockstarter-wl",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Blockstarter white-label API for integration",
   "main": "blockstarter.js",
   "scripts": {
