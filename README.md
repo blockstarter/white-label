@@ -99,7 +99,7 @@ var type = 'ltc';
 
 var request = (storage.type = type, storage);
 
-address(request, function(err, addressInfo){
+blockstarter.address(request, function(err, addressInfo){
   if (err != null) {
     throw err;
   }
@@ -120,7 +120,7 @@ if (storage.sessionId == null) {
 if (storage.apiKey == null) {
   throw "API Key is required";
 }
-helpMe(storage, function(err, info){
+blockstarter.helpMe(storage, function(err, info){
   if (err != null) {
     throw err;
   }
