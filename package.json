@@ -1,0 +1,23 @@
+{
+  "name": "blockstarter-wl",
+  "version": "0.0.1",
+  "description": "Blockstarter white-label API for integration",
+  "main": "blockstarter.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/blockstarter/white-label.git"
+  },
+  "keywords": [
+    "white-label",
+    "wallet"
+  ],
+  "author": "Blockstarter Inc",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blockstarter/white-label/issues"
+  },
+  "homepage": "https://github.com/blockstarter/white-label#readme"
+}
