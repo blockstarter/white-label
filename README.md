@@ -15,6 +15,7 @@ npm i blockstarter-wl
 * auth
 * forgotPassword
 * resetPassword
+* changePassword
 * panel
 * address
 * contributors
@@ -111,6 +112,37 @@ var request = {
 }
     
 blockstarter.resetPassword(request, function(err, dashboard){
+  if (err != null) {
+    throw err;
+  }
+  
+  console.log("done");
+});
+```  
+
+####  Change password
+
+Change password when session is created and user is online
+
+```Javascript
+  
+if (storage.apiKey == null) {
+      throw "API Key is required";
+}
+
+if (storage.sessionId == null) {
+      throw "Session is required";
+}
+
+var request = {
+    apiKey: storage.apiKey,
+    sessionId: storage.sessionId,
+    newPassword: "newPassword",
+    oldPassword: "oldPassword",
+    transport: "postmaster@test.mailgun.org"
+}
+    
+blockstarter.changePassword(request, function(err, dashboard){
   if (err != null) {
     throw err;
   }
