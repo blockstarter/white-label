@@ -10,6 +10,15 @@ This is library helps to integrate blockstarter with client's dashboard
 npm i blockstarter-wl
 ```
 
+# Available functions 
+
+* auth
+* forgotPassword
+* resetPassword
+* panel
+* address
+* contributors
+
 ## Usage
 
 First of all define a storage
