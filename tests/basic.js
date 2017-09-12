@@ -5,6 +5,7 @@
   auth = blockstarter.auth, panel = blockstarter.panel, helpMe = blockstarter.helpMe, address = blockstarter.address;
   describe('Basic', function(_){
     var storage;
+    return;
     storage = {
       sessionId: null,
       apiKey: 'TEST-APIKEY'
@@ -51,7 +52,7 @@
       });
     });
     it('address', function(done){
-      var type;
+      var type, request;
       this.timeout(5000);
       if (storage.sessionId == null) {
         throw "Session is required";
@@ -63,7 +64,13 @@
         throw "Dashboard is required";
       }
       type = 'ltc';
-      done();
+      request = (storage.type = type, storage);
+      address(request, function(err, addressInfo){
+        if (err != null) {
+          throw err;
+        }
+        done();
+      });
     });
     it('help-me', function(done){
       if (storage.sessionId == null) {

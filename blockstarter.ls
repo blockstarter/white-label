@@ -38,6 +38,13 @@ export auth = (form, cb)->
    return cb err if err?
    cb null, JSON.parse(resp.text)
 
+export contributors = (storage, cb)->
+   { api-key, project } = storage
+   required { api-key, project }
+   fullurl = url("campaign/#{project}/contributors")
+   err, resp <-! superagent.get(fullurl).set(\api-key, api-key).end
+   return cb err if err?
+   cb null, JSON.parse(resp.text)
 
 export panel = sid-based 'get contribution-panel'
 

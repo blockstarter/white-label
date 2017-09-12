@@ -141,3 +141,27 @@ blockstarter.helpMe(storage, function(err, info){
 });
 
 ```
+
+####  List of contributors
+
+Get list of contributors for administrator
+
+```Javascript
+
+if (storage.apiKey == null) {
+  throw "API Key is required";
+}
+
+var request = { 
+   apiKey: storage.apiKey,  
+   project: "KickCity"
+}
+
+blockstarter.contributors(request, function(err, list){
+  if (err != null) {
+    throw err;
+  }
+  console.log(list)
+});
+
+```

@@ -5,6 +5,7 @@ require! {
 { auth, panel, help-me, address } = blockstarter
 
 describe \Basic , !(_)->
+
    storage =
       session-id: null
       api-key: 'TEST-APIKEY'
