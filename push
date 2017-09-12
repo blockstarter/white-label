@@ -1,4 +1,11 @@
+lsc -c *.ls
+cd tests 
+lsc -c *.ls
+cd ..
+jq .subversion=.subversion+1 package.json > output.json
+jq .version=.uperversion+\".\"+\(.subversion\|tostring\) output.json > package.json
+rm output.json
 git add .
 git commit -m "$1"
-git pull
-git push
+git push origin HEAD
+npm publish

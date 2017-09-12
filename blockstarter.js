@@ -15,6 +15,10 @@
   };
   sidBased = curry$(function(part, storage, cb){
     var sessionId, apiKey, ref$, method, urlPart, fullurl;
+    if (sidBased.loading === true) {
+      return cb("Already in process");
+    }
+    sidBased.loading = true;
     sessionId = storage.sessionId, apiKey = storage.apiKey;
     ref$ = part.split(' '), method = ref$[0], urlPart = ref$[1];
     required({
@@ -23,6 +27,7 @@
     });
     fullurl = url(urlPart);
     return superagent[method](fullurl).set('sid', sessionId).set('api-key', apiKey).end(function(err, resp){
+      delete sidBased.loading;
       if (err != null) {
         return cb(err);
       }
@@ -33,6 +38,10 @@
   out$.address = address = function(arg$, cb){
     var sessionId, dashboard, type, apiKey, address;
     sessionId = arg$.sessionId, dashboard = arg$.dashboard, type = arg$.type, apiKey = arg$.apiKey;
+    if (address.loading === true) {
+      return cb("Already in process");
+    }
+    address.loading = true;
     required({
       sessionId: sessionId,
       dashboard: dashboard,
@@ -50,6 +59,7 @@
       sessionId: sessionId,
       apiKey: apiKey
     }, function(err, resp){
+      delete address.loading;
       if (err != null) {
         return cb(err);
       }
@@ -59,11 +69,16 @@
   };
   out$.auth = auth = function(form, cb){
     var fullurl;
+    if (auth.loading === true) {
+      return cb("Already in process");
+    }
+    auth.loading = true;
     required({
       form: form
     });
     fullurl = url('crowdsale/start');
     return superagent.post(fullurl).send(form).end(function(err, resp){
+      delete auth.loading;
       if (err != null) {
         return cb(err);
       }
@@ -72,6 +87,10 @@
   };
   out$.contributors = contributors = function(storage, cb){
     var apiKey, project, fullurl;
+    if (contributors.loading === true) {
+      return cb("Already in process");
+    }
+    contributors.loading = true;
     apiKey = storage.apiKey, project = storage.project;
     required({
       apiKey: apiKey,
@@ -79,6 +98,7 @@
     });
     fullurl = url("campaign/" + project + "/contributors");
     return superagent.get(fullurl).set('api-key', apiKey).end(function(err, resp){
+      delete contributors.loading;
       if (err != null) {
         return cb(err);
       }

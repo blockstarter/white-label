@@ -5,7 +5,6 @@
   auth = blockstarter.auth, panel = blockstarter.panel, helpMe = blockstarter.helpMe, address = blockstarter.address;
   describe('Basic', function(_){
     var storage;
-    return;
     storage = {
       sessionId: null,
       apiKey: 'TEST-APIKEY'

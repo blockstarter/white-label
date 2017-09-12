@@ -18,7 +18,6 @@
         apiKey: storage.apiKey,
         project: project
       }, function(err, list){
-        console.log(list);
         if (err != null) {
           throw err;
         }
