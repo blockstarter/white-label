@@ -159,7 +159,12 @@ if (storage.dashboard == null) {
   throw "Dashboard is required";
 }
 
-var request =  Object.assign({}, storage, { type: 'ltc' });
+var request = {
+   sessionId: storage.sessionId,
+   apiKey: storage.apiKey,
+   dashboard: storage.dashboard,
+   type: 'ltc'
+}   
 
 blockstarter.address(request, function(err, addressInfo){
   if (err != null) {
