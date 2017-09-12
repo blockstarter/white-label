@@ -84,8 +84,8 @@ blockstarter.forgotPassword(request, function(err, dashboard){
 
 ####  Reset password
 
-User obtains email message with restore password link and then fills the form. 
-You should obtain restore-key from query param and send the password
+User obtains email message with `restore password link` and then user fills the form. 
+You should obtain `restore-key` from query params and send it to the server
 
 ```Javascript
   
