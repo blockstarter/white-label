@@ -59,6 +59,57 @@ blockstarter.auth({
 
 ```
 
+####  Forgot password
+
+```Javascript
+
+if (storage.apiKey == null) {
+      throw "API Key is required";
+}
+
+var request = {
+    apiKey: storage.apiKey,
+    transport: "postmaster@test.mailgun.org",
+    returnUrl: "http://restore-password.com" //server will invoke http://restore-password.com?restore-key=SOME_RANDON_KEY
+}
+    
+blockstarter.forgotPassword(request, function(err, dashboard){
+  if (err != null) {
+    throw err;
+  }
+  
+  console.log("done");
+});
+```  
+
+####  Reset password
+
+User obtains email message with restore password link and then fills the form. 
+You should obtain restore-key from query param and send the password
+
+```Javascript
+  
+
+if (storage.apiKey == null) {
+      throw "API Key is required";
+}
+
+var request = {
+    apiKey: storage.apiKey,
+    newPassword: "newPassword",
+    transport: "postmaster@test.mailgun.org",
+    restoreKey: "Obtain restore key from ?restore-key=SOME_RANDON_KEY"
+}
+    
+blockstarter.resetPassword(request, function(err, dashboard){
+  if (err != null) {
+    throw err;
+  }
+  
+  console.log("done");
+});
+```  
+
 ####  Get Dashboard
 
 Information about Totals, Rates, Currencies, etc. in order to build a main screen where contributor can 

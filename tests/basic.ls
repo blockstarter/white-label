@@ -2,7 +2,7 @@ require! {
     \../blockstarter.js
 }
 
-{ auth, panel, help-me, address } = blockstarter
+{ auth, panel, help-me, address, reset-password, forgot-password } = blockstarter
 
 describe \Basic , !(_)->
 
@@ -28,6 +28,46 @@ describe \Basic , !(_)->
       throw "Session ID is missing" if not session.session-id?
       
       storage.session-id = session.session-id
+      
+      done!
+   
+   #  User is able to reset his password
+   it \forgot-password, (done) !->
+      
+      throw "API Key is required" if not storage.api-key?
+      
+      return-url = "http://restore-password.com"
+      
+      transport = "postmaster@test.mailgun.org" #optional
+      
+      request = { storage.api-key, return-url, transport }
+      
+      err, resp <-! forgot-password request
+      
+      storage.restore-key = "OBTAIN RESTORE KEY FROM EMAIL"
+      
+      storage.restore-key = resp.restore-key # Available for tests
+      
+      throw err if err?
+      
+      done!
+
+   it \reset-password, (done) !->
+      
+      throw "API Key is required" if not storage.api-key?
+      throw "Restore Key is required" if not storage.restore-key?
+      
+      transport = "postmaster@test.mailgun.org" #optional
+      
+      new-password = "NEWPASSWORD"
+      
+      request = { storage.api-key, storage.restore-key, transport, new-password }
+      
+      err <-! reset-password request
+      
+      delete storage.restore-key
+      
+      throw err if err?
       
       done!
 
