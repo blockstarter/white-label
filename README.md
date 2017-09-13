@@ -1,4 +1,4 @@
-# Blockstarter White Label API (Blockstarter Enterprice)
+# Blockstarter White Label API (Blockstarter Enterprise)
 
 This is library helps to integrate blockstarter with client's dashboard
 
