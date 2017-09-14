@@ -79,6 +79,8 @@ if (storage.apiKey == null) {
 
 var request = {
     apiKey: storage.apiKey,
+    email: "your@email.com",
+    project: "KickCity",
     transport: "postmaster@test.mailgun.org",
     returnUrl: "http://restore-password.com" //server will invoke http://restore-password.com?restore-key=SOME_RANDON_KEY
 }

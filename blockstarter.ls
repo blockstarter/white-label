@@ -67,10 +67,10 @@ export contributors = (storage, cb)->
    cb null, JSON.parse(resp.text)
 
 
-export forgot-password = ({ return-url, transport, api-key }, cb)->
+export forgot-password = ({ return-url, transport, api-key, email, project }, cb)->
    return cb "Already in process" if forgot-password.loading is yes
    forgot-password.loading = yes
-   required { return-url, api-key }
+   required { return-url, api-key, email, project }
    fullurl = url \forgot-password
    err, resp <-! superagent.post fullurl .send { return-url, transport, api-key } .end
    delete forgot-password.loading

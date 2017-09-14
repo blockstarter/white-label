@@ -123,15 +123,17 @@
     });
   };
   out$.forgotPassword = forgotPassword = function(arg$, cb){
-    var returnUrl, transport, apiKey, fullurl;
-    returnUrl = arg$.returnUrl, transport = arg$.transport, apiKey = arg$.apiKey;
+    var returnUrl, transport, apiKey, email, project, fullurl;
+    returnUrl = arg$.returnUrl, transport = arg$.transport, apiKey = arg$.apiKey, email = arg$.email, project = arg$.project;
     if (forgotPassword.loading === true) {
       return cb("Already in process");
     }
     forgotPassword.loading = true;
     required({
       returnUrl: returnUrl,
-      apiKey: apiKey
+      apiKey: apiKey,
+      email: email,
+      project: project
     });
     fullurl = url('forgot-password');
     return superagent.post(fullurl).send({
