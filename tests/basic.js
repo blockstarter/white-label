@@ -36,16 +36,20 @@
       });
     });
     it('forgot-password', function(done){
-      var returnUrl, transport, request;
+      var returnUrl, transport, email, project, request;
       if (storage.apiKey == null) {
         throw "API Key is required";
       }
       returnUrl = "http://restore-password.com";
       transport = "postmaster@test.mailgun.org";
+      email = "your@email.com";
+      project = "KickCity";
       request = {
         apiKey: storage.apiKey,
         returnUrl: returnUrl,
-        transport: transport
+        transport: transport,
+        email: email,
+        project: project
       };
       forgotPassword(request, function(err, resp){
         storage.restoreKey = "OBTAIN RESTORE KEY FROM EMAIL";

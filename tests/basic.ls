@@ -40,7 +40,11 @@ describe \Basic , !(_)->
       
       transport = "postmaster@test.mailgun.org" #optional
       
-      request = { storage.api-key, return-url, transport }
+      email = "your@email.com"
+      
+      project = "KickCity"
+      
+      request = { storage.api-key, return-url, transport, email, project }
       
       err, resp <-! forgot-password request
       
