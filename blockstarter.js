@@ -138,9 +138,8 @@
     fullurl = url('forgot-password');
     return superagent.post(fullurl).send({
       returnUrl: returnUrl,
-      transport: transport,
-      apiKey: apiKey
-    }).end(function(err, resp){
+      transport: transport
+    }).set('api-key', apiKey).end(function(err, resp){
       delete forgotPassword.loading;
       if (err != null) {
         return cb(err);
@@ -164,9 +163,8 @@
     return superagent.post(fullurl).send({
       restoreKey: restoreKey,
       newPassword: newPassword,
-      transport: transport,
-      apiKey: apiKey
-    }).end(function(err, resp){
+      transport: transport
+    }).set('api-key', apiKey).end(function(err, resp){
       delete resetPassword.loading;
       if (err != null) {
         return cb(err);
