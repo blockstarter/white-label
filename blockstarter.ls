@@ -47,10 +47,10 @@ export auth = (form, cb)->
 export change-password = (storage, cb)->
    return cb "Already in process" if change-password.loading is yes
    change-password.loading = yes
-   { api-key, session-id, new-password, old-password } = storage
+   { api-key, session-id, new-password, old-password, transport } = storage
    required { api-key, session-id, new-password, old-password }
    fullurl = url \change-password
-   err, resp <-! superagent.post(fullurl).send(storage).set(\api-key, api-key).end
+   err, resp <-! superagent.post(fullurl).send({ new-password, old-password, transport }).set(\api-key, api-key).set(\sid, session-id).end
    delete change-password.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)

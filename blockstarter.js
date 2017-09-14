@@ -81,12 +81,12 @@
     });
   };
   out$.changePassword = changePassword = function(storage, cb){
-    var apiKey, sessionId, newPassword, oldPassword, fullurl;
+    var apiKey, sessionId, newPassword, oldPassword, transport, fullurl;
     if (changePassword.loading === true) {
       return cb("Already in process");
     }
     changePassword.loading = true;
-    apiKey = storage.apiKey, sessionId = storage.sessionId, newPassword = storage.newPassword, oldPassword = storage.oldPassword;
+    apiKey = storage.apiKey, sessionId = storage.sessionId, newPassword = storage.newPassword, oldPassword = storage.oldPassword, transport = storage.transport;
     required({
       apiKey: apiKey,
       sessionId: sessionId,
@@ -94,7 +94,11 @@
       oldPassword: oldPassword
     });
     fullurl = url('change-password');
-    return superagent.post(fullurl).send(storage).set('api-key', apiKey).end(function(err, resp){
+    return superagent.post(fullurl).send({
+      newPassword: newPassword,
+      oldPassword: oldPassword,
+      transport: transport
+    }).set('api-key', apiKey).set('sid', sessionId).end(function(err, resp){
       delete changePassword.loading;
       if (err != null) {
         return cb(err);
