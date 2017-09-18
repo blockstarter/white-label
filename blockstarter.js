@@ -47,9 +47,11 @@
     if (support.indexOf(type.toLowerCase()) === -1) {
       throw "Support only " + support;
     }
-    address = dashboard.user.profile[type + "-address"];
-    if (address) {
-      return cb(null, address);
+    if (dashboard != null) {
+      address = dashboard.user.profile[type + "-address"];
+      if (address) {
+        return cb(null, address);
+      }
     }
     return sidBased("get new-address/" + type, {
       sessionId: sessionId,
@@ -58,7 +60,9 @@
       if (err != null) {
         return cb(err);
       }
-      dashboard.user.profile[type + "-address"] = resp.address;
+      if (dashboard != null) {
+        dashboard.user.profile[type + "-address"] = resp.address;
+      }
       cb(null, resp.address);
     });
   };

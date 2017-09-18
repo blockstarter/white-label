@@ -27,11 +27,13 @@ support = <[ btc ltc dash doge eth waves zec ]>
 export address = ({ session-id, dashboard, type, api-key }, cb)->
     required { session-id, dashboard, type, api-key }
     throw "Support only #{support}" if support.index-of(type.to-lower-case!) is -1
-    address = dashboard.user.profile["#{type}-address"]
-    return cb null, address if address
+    if dashboard?
+       address = dashboard.user.profile["#{type}-address"]
+       return cb null, address if address
     err, resp <-! sid-based "get new-address/#type", { session-id, api-key }
     return cb err if err?
-    dashboard.user.profile["#{type}-address"] = resp.address
+    if dashboard?
+       dashboard.user.profile["#{type}-address"] = resp.address
     cb null, resp.address
 
 export auth = (form, cb)->
