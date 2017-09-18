@@ -25,7 +25,7 @@ sid-based = (part, storage, cb)-->
 support = <[ btc ltc dash doge eth waves zec ]>
 
 export address = ({ session-id, dashboard, type, api-key }, cb)->
-    required { session-id, dashboard, type, api-key }
+    required { session-id, type, api-key }
     throw "Support only #{support}" if support.index-of(type.to-lower-case!) is -1
     if dashboard?
        address = dashboard.user.profile["#{type}-address"]

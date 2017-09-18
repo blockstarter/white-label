@@ -40,7 +40,6 @@
     sessionId = arg$.sessionId, dashboard = arg$.dashboard, type = arg$.type, apiKey = arg$.apiKey;
     required({
       sessionId: sessionId,
-      dashboard: dashboard,
       type: type,
       apiKey: apiKey
     });
