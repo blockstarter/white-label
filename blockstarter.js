@@ -14,8 +14,12 @@
     return Object.keys(o).forEach(check(o));
   };
   sidBased = curry$(function(part, storage, cb){
-    var sessionId, apiKey, baseUrl, ref$, method, urlPart, fullurl;
-    sessionId = storage.sessionId, apiKey = storage.apiKey, baseUrl = storage.baseUrl;
+    var sessionId, apiKey, baseUrl, isBrowser, ref$, method, urlPart, fullurl;
+    sessionId = storage.sessionId, apiKey = storage.apiKey, baseUrl = storage.baseUrl, isBrowser = storage.isBrowser;
+    if (sidBased.loading === true && isBrowser) {
+      return cb("Already in process");
+    }
+    sidBased.loading = true;
     ref$ = part.split(' '), method = ref$[0], urlPart = ref$[1];
     required({
       sessionId: sessionId,
@@ -24,6 +28,7 @@
     });
     fullurl = url(baseUrl, urlPart);
     return superagent[method](fullurl).set('sid', sessionId).set('api-key', apiKey).end(function(err, resp){
+      delete sidBased.loading;
       if (err != null) {
         return cb(err);
       }
@@ -32,8 +37,8 @@
   });
   support = ['btc', 'ltc', 'dash', 'doge', 'eth', 'waves', 'zec'];
   out$.address = address = function(arg$, cb){
-    var sessionId, dashboard, type, apiKey, address;
-    sessionId = arg$.sessionId, dashboard = arg$.dashboard, type = arg$.type, apiKey = arg$.apiKey;
+    var sessionId, dashboard, type, apiKey, isBrowser, address;
+    sessionId = arg$.sessionId, dashboard = arg$.dashboard, type = arg$.type, apiKey = arg$.apiKey, isBrowser = arg$.isBrowser;
     required({
       sessionId: sessionId,
       type: type,
@@ -50,7 +55,8 @@
     }
     return sidBased("get new-address/" + type, {
       sessionId: sessionId,
-      apiKey: apiKey
+      apiKey: apiKey,
+      isBrowser: isBrowser
     }, function(err, resp){
       if (err != null) {
         return cb(err);
@@ -62,16 +68,18 @@
     });
   };
   out$.auth = auth = function(form, cb){
-    var baseUrl, fullurl;
-    required({
-      form: form
-    });
-    baseUrl = form.baseUrl;
+    var baseUrl, isBrowser, fullurl;
+    baseUrl = form.baseUrl, isBrowser = form.isBrowser;
+    if (auth.loading === true && isBrowser) {
+      return cb("Already in process");
+    }
+    auth.loading = true;
     required({
       baseUrl: baseUrl
     });
     fullurl = url(baseUrl, 'crowdsale/start');
     return superagent.post(fullurl).send(form).end(function(err, resp){
+      delete auth.loading;
       if (err != null) {
         return cb(err);
       }
@@ -79,8 +87,12 @@
     });
   };
   out$.changePassword = changePassword = function(storage, cb){
-    var apiKey, sessionId, newPassword, oldPassword, transport, baseUrl, fullurl;
-    apiKey = storage.apiKey, sessionId = storage.sessionId, newPassword = storage.newPassword, oldPassword = storage.oldPassword, transport = storage.transport, baseUrl = storage.baseUrl;
+    var apiKey, sessionId, newPassword, oldPassword, transport, baseUrl, isBrowser, fullurl;
+    apiKey = storage.apiKey, sessionId = storage.sessionId, newPassword = storage.newPassword, oldPassword = storage.oldPassword, transport = storage.transport, baseUrl = storage.baseUrl, isBrowser = storage.isBrowser;
+    if (changePassword.loading === true && isBrowser) {
+      return cb("Already in process");
+    }
+    changePassword.loading = true;
     required({
       apiKey: apiKey,
       sessionId: sessionId,
@@ -94,6 +106,7 @@
       oldPassword: oldPassword,
       transport: transport
     }).set('api-key', apiKey).set('sid', sessionId).end(function(err, resp){
+      delete changePassword.loading;
       if (err != null) {
         return cb(err);
       }
@@ -101,8 +114,12 @@
     });
   };
   out$.contributors = contributors = function(storage, cb){
-    var apiKey, project, baseUrl, fullurl;
-    apiKey = storage.apiKey, project = storage.project, baseUrl = storage.baseUrl;
+    var apiKey, project, baseUrl, isBrowser, fullurl;
+    apiKey = storage.apiKey, project = storage.project, baseUrl = storage.baseUrl, isBrowser = storage.isBrowser;
+    if (contributors.loading === true && isBrowser) {
+      return cb("Already in process");
+    }
+    contributors.loading = true;
     required({
       apiKey: apiKey,
       project: project,
@@ -110,6 +127,7 @@
     });
     fullurl = url(baseUrl, "campaign/" + project + "/contributors");
     return superagent.get(fullurl).set('api-key', apiKey).end(function(err, resp){
+      delete contributors.loading;
       if (err != null) {
         return cb(err);
       }
@@ -117,8 +135,12 @@
     });
   };
   out$.forgotPassword = forgotPassword = function(arg$, cb){
-    var returnUrl, transport, apiKey, email, project, baseUrl, fullurl;
-    returnUrl = arg$.returnUrl, transport = arg$.transport, apiKey = arg$.apiKey, email = arg$.email, project = arg$.project, baseUrl = arg$.baseUrl;
+    var returnUrl, transport, apiKey, email, project, baseUrl, isBrowser, fullurl;
+    returnUrl = arg$.returnUrl, transport = arg$.transport, apiKey = arg$.apiKey, email = arg$.email, project = arg$.project, baseUrl = arg$.baseUrl, isBrowser = arg$.isBrowser;
+    if (forgotPassword.loading === true && isBrowser) {
+      return cb("Already in process");
+    }
+    forgotPassword.loading = true;
     required({
       returnUrl: returnUrl,
       apiKey: apiKey,
@@ -131,6 +153,7 @@
       returnUrl: returnUrl,
       transport: transport
     }).set('api-key', apiKey).end(function(err, resp){
+      delete forgotPassword.loading;
       if (err != null) {
         return cb(err);
       }
@@ -138,8 +161,12 @@
     });
   };
   out$.resetPassword = resetPassword = function(arg$, cb){
-    var restoreKey, newPassword, transport, apiKey, baseUrl, fullurl;
-    restoreKey = arg$.restoreKey, newPassword = arg$.newPassword, transport = arg$.transport, apiKey = arg$.apiKey, baseUrl = arg$.baseUrl;
+    var restoreKey, newPassword, transport, apiKey, baseUrl, isBrowser, fullurl;
+    restoreKey = arg$.restoreKey, newPassword = arg$.newPassword, transport = arg$.transport, apiKey = arg$.apiKey, baseUrl = arg$.baseUrl, isBrowser = arg$.isBrowser;
+    if (resetPassword.loading === true && isBrowser) {
+      return cb("Already in process");
+    }
+    resetPassword.loading = true;
     required({
       returnUrl: returnUrl,
       apiKey: apiKey,
@@ -152,6 +179,7 @@
       newPassword: newPassword,
       transport: transport
     }).set('api-key', apiKey).end(function(err, resp){
+      delete resetPassword.loading;
       if (err != null) {
         return cb(err);
       }

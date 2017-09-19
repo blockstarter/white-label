@@ -257,6 +257,7 @@ if (storage.apiKey == null) {
 }
 
 var request = { 
+   isBrowser: true,    //=> you cannot duplicate requests for browser
    baseUrl: storage.baseUrl,
    apiKey: storage.apiKey,  
    project: "KickCity"
