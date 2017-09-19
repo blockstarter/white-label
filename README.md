@@ -48,7 +48,7 @@ if (storage.apiKey == null) {
 }
 
 blockstarter.auth({
-
+  baseUrl: storage.baseUrl,
   email: 'test@test.com',
   password: 'unique password',
   project: 'KickCity',
@@ -79,6 +79,7 @@ if (storage.apiKey == null) {
 }
 
 var request = {
+    baseUrl: storage.baseUrl,
     apiKey: storage.apiKey,
     email: "your@email.com",
     project: "KickCity",
@@ -108,6 +109,7 @@ if (storage.apiKey == null) {
 }
 
 var request = {
+    baseUrl: storage.baseUrl,
     apiKey: storage.apiKey,
     newPassword: "newPassword",
     transport: "postmaster@test.mailgun.org",
@@ -138,6 +140,7 @@ if (storage.sessionId == null) {
 }
 
 var request = {
+    baseUrl: storage.baseUrl,
     apiKey: storage.apiKey,
     sessionId: storage.sessionId,
     newPassword: "newPassword",
@@ -204,8 +207,9 @@ if (storage.dashboard == null) {
 }
 
 var request = {
-   sessionId: storage.sessionId,
+   baseUrl: storage.baseUrl,
    apiKey: storage.apiKey,
+   sessionId: storage.sessionId,
    dashboard: storage.dashboard,
    type: 'ltc'
 }   
@@ -253,6 +257,7 @@ if (storage.apiKey == null) {
 }
 
 var request = { 
+   baseUrl: storage.baseUrl,
    apiKey: storage.apiKey,  
    project: "KickCity"
 }
