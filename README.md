@@ -27,6 +27,7 @@ First of all define a storage
 ```Javascript
 
 var storage = {
+    isBrowser: true,  //=> you cannot duplicate requests for browser
     baseUrl: "http://server.url",
     sessionId: null,
     apiKey: 'TEST-APIKEY',
@@ -48,6 +49,7 @@ if (storage.apiKey == null) {
 }
 
 blockstarter.auth({
+  isBrowser: storage.isBrowser,
   baseUrl: storage.baseUrl,
   email: 'test@test.com',
   password: 'unique password',
@@ -79,6 +81,7 @@ if (storage.apiKey == null) {
 }
 
 var request = {
+    isBrowser: storage.isBrowser,
     baseUrl: storage.baseUrl,
     apiKey: storage.apiKey,
     email: "your@email.com",
@@ -108,7 +111,8 @@ if (storage.apiKey == null) {
       throw "API Key is required";
 }
 
-var request = {
+var request = { 
+    isBrowser: storage.isBrowser,
     baseUrl: storage.baseUrl,
     apiKey: storage.apiKey,
     newPassword: "newPassword",
@@ -140,6 +144,7 @@ if (storage.sessionId == null) {
 }
 
 var request = {
+    isBrowser: storage.isBrowser,
     baseUrl: storage.baseUrl,
     apiKey: storage.apiKey,
     sessionId: storage.sessionId,
@@ -207,6 +212,7 @@ if (storage.dashboard == null) {
 }
 
 var request = {
+   isBrowser: storage.isBrowser,
    baseUrl: storage.baseUrl,
    apiKey: storage.apiKey,
    sessionId: storage.sessionId,
@@ -257,7 +263,7 @@ if (storage.apiKey == null) {
 }
 
 var request = { 
-   isBrowser: true,    //=> you cannot duplicate requests for browser
+   isBrowser: storage.isBrowser,
    baseUrl: storage.baseUrl,
    apiKey: storage.apiKey,  
    project: "KickCity"
