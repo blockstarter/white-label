@@ -2,7 +2,9 @@ require! {
     \superagent
 }
 
-url = -> "http://root.flyber.net/#{it}"
+
+url = (root, part)-> 
+   "#{root}/#{part}"
 
 check = (o, key)-->
     throw "Required argument '#key' is not passed. Please check the documentation." if not o[key]?
@@ -13,10 +15,10 @@ required = (o)->
 sid-based = (part, storage, cb)-->
    return cb "Already in process" if sid-based.loading is yes
    sid-based.loading = yes
-   { session-id, api-key } = storage
+   { session-id, api-key, base-url } = storage
    [method, url-part] = part.split(' ')
-   required { session-id, api-key }
-   fullurl = url url-part
+   required { session-id, api-key, base-url }
+   fullurl = url base-url, url-part
    err, resp <-! superagent[method](fullurl).set(\sid, session-id).set(\api-key, api-key).end
    delete sid-based.loading
    return cb err if err?
@@ -40,7 +42,9 @@ export auth = (form, cb)->
    return cb "Already in process" if auth.loading is yes
    auth.loading = yes
    required { form }
-   fullurl = url \crowdsale/start
+   { base-url } = form
+   required { base-url }
+   fullurl = url base-url, \crowdsale/start
    err, resp <-! superagent.post fullurl .send form .end
    delete auth.loading
    return cb err if err?
@@ -49,9 +53,9 @@ export auth = (form, cb)->
 export change-password = (storage, cb)->
    return cb "Already in process" if change-password.loading is yes
    change-password.loading = yes
-   { api-key, session-id, new-password, old-password, transport } = storage
-   required { api-key, session-id, new-password, old-password }
-   fullurl = url \change-password
+   { api-key, session-id, new-password, old-password, transport, base-url } = storage
+   required { api-key, session-id, new-password, old-password, base-url }
+   fullurl = url base-url, \change-password
    err, resp <-! superagent.post(fullurl).send({ new-password, old-password, transport }).set(\api-key, api-key).set(\sid, session-id).end
    delete change-password.loading
    return cb err if err?
@@ -60,31 +64,31 @@ export change-password = (storage, cb)->
 export contributors = (storage, cb)->
    return cb "Already in process" if contributors.loading is yes
    contributors.loading = yes
-   { api-key, project } = storage
-   required { api-key, project }
-   fullurl = url("campaign/#{project}/contributors")
+   { api-key, project, base-url } = storage
+   required { api-key, project, base-url }
+   fullurl = url(base-url, "campaign/#{project}/contributors")
    err, resp <-! superagent.get(fullurl).set(\api-key, api-key).end
    delete contributors.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)
 
 
-export forgot-password = ({ return-url, transport, api-key, email, project }, cb)->
+export forgot-password = ({ return-url, transport, api-key, email, project, base-url }, cb)->
    return cb "Already in process" if forgot-password.loading is yes
    forgot-password.loading = yes
-   required { return-url, api-key, email, project }
-   fullurl = url \forgot-password
+   required { return-url, api-key, email, project, base-url }
+   fullurl = url base-url, \forgot-password
    err, resp <-! superagent.post fullurl .send { return-url, transport } .set(\api-key, api-key) .end
    delete forgot-password.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)
 
 #{ storage.api-key, storage.restore-key, transport, new-password }
-export reset-password = ({ restore-key, new-password, transport, api-key }, cb)->
+export reset-password = ({ restore-key, new-password, transport, api-key, base-url }, cb)->
    return cb "Already in process" if reset-password.loading is yes
    reset-password.loading = yes
-   required { return-url, api-key, new-password }
-   fullurl = url \forgot-password
+   required { return-url, api-key, new-password, base-url }
+   fullurl = url base-url, \forgot-password
    err, resp <-! superagent.post fullurl .send { restore-key, new-password, transport } .set(\api-key, api-key)  .end
    delete reset-password.loading
    return cb err if err?

@@ -27,6 +27,7 @@ First of all define a storage
 ```Javascript
 
 var storage = {
+    baseUrl: "http://server.url",
     sessionId: null,
     apiKey: 'TEST-APIKEY',
     dashboard: null

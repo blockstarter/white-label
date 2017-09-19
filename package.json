@@ -1,28 +1,28 @@
 {
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/blockstarter/white-label/issues"
+  },
+  "main": "blockstarter.js",
+  "description": "Blockstarter white-label API for integration",
+  "subversion": 19,
+  "homepage": "https://github.com/blockstarter/white-label#readme",
+  "dependencies": {
+    "superagent": "^3.6.0"
+  },
+  "uperversion": "0.0",
+  "author": "Blockstarter Inc",
+  "keywords": [
+    "white-label",
+    "wallet"
+  ],
+  "name": "blockstarter-wl",
+  "version": "0.0.19",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/blockstarter/white-label.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "homepage": "https://github.com/blockstarter/white-label#readme",
-  "subversion": 18,
-  "description": "Blockstarter white-label API for integration",
-  "main": "blockstarter.js",
-  "bugs": {
-    "url": "https://github.com/blockstarter/white-label/issues"
-  },
-  "license": "ISC",
-  "version": "0.0.18",
-  "name": "blockstarter-wl",
-  "keywords": [
-    "white-label",
-    "wallet"
-  ],
-  "author": "Blockstarter Inc",
-  "uperversion": "0.0",
-  "dependencies": {
-    "superagent": "^3.6.0"
   }
 }
