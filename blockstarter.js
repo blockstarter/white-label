@@ -37,12 +37,13 @@
   });
   support = ['btc', 'ltc', 'dash', 'doge', 'eth', 'waves', 'zec'];
   out$.address = address = function(arg$, cb){
-    var sessionId, dashboard, type, apiKey, isBrowser, address;
-    sessionId = arg$.sessionId, dashboard = arg$.dashboard, type = arg$.type, apiKey = arg$.apiKey, isBrowser = arg$.isBrowser;
+    var sessionId, dashboard, type, apiKey, isBrowser, baseUrl, address;
+    sessionId = arg$.sessionId, dashboard = arg$.dashboard, type = arg$.type, apiKey = arg$.apiKey, isBrowser = arg$.isBrowser, baseUrl = arg$.baseUrl;
     required({
       sessionId: sessionId,
       type: type,
-      apiKey: apiKey
+      apiKey: apiKey,
+      baseUrl: baseUrl
     });
     if (support.indexOf(type.toLowerCase()) === -1) {
       throw "Support only " + support;
@@ -56,7 +57,8 @@
     return sidBased("get new-address/" + type, {
       sessionId: sessionId,
       apiKey: apiKey,
-      isBrowser: isBrowser
+      isBrowser: isBrowser,
+      baseUrl: baseUrl
     }, function(err, resp){
       if (err != null) {
         return cb(err);

@@ -26,13 +26,13 @@ sid-based = (part, storage, cb)-->
 
 support = <[ btc ltc dash doge eth waves zec ]>
 
-export address = ({ session-id, dashboard, type, api-key, is-browser }, cb)->
-    required { session-id, type, api-key }
+export address = ({ session-id, dashboard, type, api-key, is-browser, base-url }, cb)->
+    required { session-id, type, api-key, base-url }
     throw "Support only #{support}" if support.index-of(type.to-lower-case!) is -1
     if dashboard?
        address = dashboard.user.profile["#{type}-address"]
        return cb null, address if address
-    err, resp <-! sid-based "get new-address/#type", { session-id, api-key, is-browser }
+    err, resp <-! sid-based "get new-address/#type", { session-id, api-key, is-browser, base-url }
     return cb err if err?
     if dashboard?
        dashboard.user.profile["#{type}-address"] = resp.address

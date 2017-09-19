@@ -6,6 +6,8 @@
   describe('Basic', function(_){
     var storage;
     storage = {
+      isBrowser: false,
+      baseUrl: "https://server.url",
       sessionId: null,
       apiKey: 'TEST-APIKEY'
     };

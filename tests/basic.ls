@@ -7,6 +7,8 @@ require! {
 describe \Basic , !(_)->
 
    storage =
+      is-browser: no
+      base-url: "https://server.url"
       session-id: null
       api-key: 'TEST-APIKEY'
 
