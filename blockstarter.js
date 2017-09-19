@@ -15,10 +15,6 @@
   };
   sidBased = curry$(function(part, storage, cb){
     var sessionId, apiKey, baseUrl, ref$, method, urlPart, fullurl;
-    if (sidBased.loading === true) {
-      return cb("Already in process");
-    }
-    sidBased.loading = true;
     sessionId = storage.sessionId, apiKey = storage.apiKey, baseUrl = storage.baseUrl;
     ref$ = part.split(' '), method = ref$[0], urlPart = ref$[1];
     required({
@@ -28,7 +24,6 @@
     });
     fullurl = url(baseUrl, urlPart);
     return superagent[method](fullurl).set('sid', sessionId).set('api-key', apiKey).end(function(err, resp){
-      delete sidBased.loading;
       if (err != null) {
         return cb(err);
       }
@@ -68,10 +63,6 @@
   };
   out$.auth = auth = function(form, cb){
     var baseUrl, fullurl;
-    if (auth.loading === true) {
-      return cb("Already in process");
-    }
-    auth.loading = true;
     required({
       form: form
     });
@@ -81,7 +72,6 @@
     });
     fullurl = url(baseUrl, 'crowdsale/start');
     return superagent.post(fullurl).send(form).end(function(err, resp){
-      delete auth.loading;
       if (err != null) {
         return cb(err);
       }
@@ -90,10 +80,6 @@
   };
   out$.changePassword = changePassword = function(storage, cb){
     var apiKey, sessionId, newPassword, oldPassword, transport, baseUrl, fullurl;
-    if (changePassword.loading === true) {
-      return cb("Already in process");
-    }
-    changePassword.loading = true;
     apiKey = storage.apiKey, sessionId = storage.sessionId, newPassword = storage.newPassword, oldPassword = storage.oldPassword, transport = storage.transport, baseUrl = storage.baseUrl;
     required({
       apiKey: apiKey,
@@ -108,7 +94,6 @@
       oldPassword: oldPassword,
       transport: transport
     }).set('api-key', apiKey).set('sid', sessionId).end(function(err, resp){
-      delete changePassword.loading;
       if (err != null) {
         return cb(err);
       }
@@ -117,10 +102,6 @@
   };
   out$.contributors = contributors = function(storage, cb){
     var apiKey, project, baseUrl, fullurl;
-    if (contributors.loading === true) {
-      return cb("Already in process");
-    }
-    contributors.loading = true;
     apiKey = storage.apiKey, project = storage.project, baseUrl = storage.baseUrl;
     required({
       apiKey: apiKey,
@@ -129,7 +110,6 @@
     });
     fullurl = url(baseUrl, "campaign/" + project + "/contributors");
     return superagent.get(fullurl).set('api-key', apiKey).end(function(err, resp){
-      delete contributors.loading;
       if (err != null) {
         return cb(err);
       }
@@ -139,10 +119,6 @@
   out$.forgotPassword = forgotPassword = function(arg$, cb){
     var returnUrl, transport, apiKey, email, project, baseUrl, fullurl;
     returnUrl = arg$.returnUrl, transport = arg$.transport, apiKey = arg$.apiKey, email = arg$.email, project = arg$.project, baseUrl = arg$.baseUrl;
-    if (forgotPassword.loading === true) {
-      return cb("Already in process");
-    }
-    forgotPassword.loading = true;
     required({
       returnUrl: returnUrl,
       apiKey: apiKey,
@@ -155,7 +131,6 @@
       returnUrl: returnUrl,
       transport: transport
     }).set('api-key', apiKey).end(function(err, resp){
-      delete forgotPassword.loading;
       if (err != null) {
         return cb(err);
       }
@@ -165,10 +140,6 @@
   out$.resetPassword = resetPassword = function(arg$, cb){
     var restoreKey, newPassword, transport, apiKey, baseUrl, fullurl;
     restoreKey = arg$.restoreKey, newPassword = arg$.newPassword, transport = arg$.transport, apiKey = arg$.apiKey, baseUrl = arg$.baseUrl;
-    if (resetPassword.loading === true) {
-      return cb("Already in process");
-    }
-    resetPassword.loading = true;
     required({
       returnUrl: returnUrl,
       apiKey: apiKey,
@@ -181,7 +152,6 @@
       newPassword: newPassword,
       transport: transport
     }).set('api-key', apiKey).end(function(err, resp){
-      delete resetPassword.loading;
       if (err != null) {
         return cb(err);
       }
