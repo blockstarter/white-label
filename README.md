@@ -54,6 +54,7 @@ blockstarter.auth({
   baseUrl: storage.baseUrl,
   email: 'test@test.com',
   password: 'unique password',
+  confirmUrl: "http://redirect-on-confirm", // will invoke http://redirect-on-confirm?confirmed=XXXXX
   project: 'KickCity',
   reference: 'traffic-source',
   apiKey: storage.apiKey

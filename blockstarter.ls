@@ -39,10 +39,10 @@ export address = ({ session-id, dashboard, type, api-key, is-browser, base-url }
     cb null, resp.address
 
 export auth = (form, cb)->
-   { base-url, is-browser } = form
+   { base-url, email, password, confirm-url, is-browser } = form
    return cb "Already in process" if auth.loading is yes and is-browser
    auth.loading = yes
-   required { base-url }
+   required { base-url, email, password, confirm-url }
    fullurl = url base-url, \crowdsale/start
    err, resp <-! superagent.post fullurl .send form .end
    delete auth.loading

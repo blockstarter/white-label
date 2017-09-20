@@ -70,14 +70,17 @@
     });
   };
   out$.auth = auth = function(form, cb){
-    var baseUrl, isBrowser, fullurl;
-    baseUrl = form.baseUrl, isBrowser = form.isBrowser;
+    var baseUrl, email, password, confirmUrl, isBrowser, fullurl;
+    baseUrl = form.baseUrl, email = form.email, password = form.password, confirmUrl = form.confirmUrl, isBrowser = form.isBrowser;
     if (auth.loading === true && isBrowser) {
       return cb("Already in process");
     }
     auth.loading = true;
     required({
-      baseUrl: baseUrl
+      baseUrl: baseUrl,
+      email: email,
+      password: password,
+      confirmUrl: confirmUrl
     });
     fullurl = url(baseUrl, 'crowdsale/start');
     return superagent.post(fullurl).send(form).end(function(err, resp){
