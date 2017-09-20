@@ -86,7 +86,7 @@ export forgot-password = ({ return-url, transport, api-key, email, project, base
 export reset-password = ({ restore-key, new-password, transport, api-key, base-url, is-browser }, cb)->
    return cb "Already in process" if reset-password.loading is yes and is-browser
    reset-password.loading = yes
-   required { return-url, api-key, new-password, base-url }
+   required { restore-key, api-key, new-password, base-url }
    fullurl = url base-url, \forgot-password
    err, resp <-! superagent.post fullurl .send { restore-key, new-password, transport } .set(\api-key, api-key)  .end
    delete reset-password.loading

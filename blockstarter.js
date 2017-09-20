@@ -172,7 +172,7 @@
     }
     resetPassword.loading = true;
     required({
-      returnUrl: returnUrl,
+      restoreKey: restoreKey,
       apiKey: apiKey,
       newPassword: newPassword,
       baseUrl: baseUrl
