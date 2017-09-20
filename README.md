@@ -13,10 +13,11 @@ npm i blockstarter-wl
 ## Available functions 
 
 * auth
+* confirmEmail
 * forgotPassword
 * resetPassword
 * changePassword
-* updateProfile (almost like changePassword but can update `email`, `username`, `address` optionaly)
+* updateProfile
 * panel
 * address
 * contributors
@@ -54,7 +55,7 @@ blockstarter.auth({
   baseUrl: storage.baseUrl,
   email: 'test@test.com',
   password: 'unique password',
-  confirmUrl: "http://redirect-on-confirm" // will redirect here
+  confirmUrl: "http://redirect-on-confirm" // will redirect here http://redirect-on-confirm?confirmation-id=XXXXX
   project: 'KickCity',
   reference: 'traffic-source',
   apiKey: storage.apiKey
@@ -73,6 +74,14 @@ blockstarter.auth({
 });
 
 ```
+
+#### Confirm Email
+
+Send `confirmation-id` and `session-id` to confirm email
+
+`Documentation is not ready`
+
+
 
 ####  Forgot password
 
@@ -163,6 +172,12 @@ blockstarter.changePassword(request, function(err, dashboard){
   console.log("done");
 });
 ```  
+
+#### Update Profile 
+
+Almost like changePassword but can update `email`, `username`, `address` optionaly
+
+`Documentation is not ready`
 
 ####  Get Dashboard
 
