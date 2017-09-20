@@ -101,8 +101,7 @@
     required({
       apiKey: apiKey,
       sessionId: sessionId,
-      newPassword: newPassword,
-      oldPassword: oldPassword,
+      confirmationId: confirmationId,
       baseUrl: baseUrl
     });
     fullurl = url(baseUrl, 'confirm-email');

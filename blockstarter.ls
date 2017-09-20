@@ -53,7 +53,7 @@ export confirm-email = (storage, cb)->
    { api-key, session-id, confirmation-id, transport, base-url, is-browser } = storage
    return cb "Already in process" if confirm-url.loading is yes and is-browser
    confirm-url.loading = yes
-   required { api-key, session-id, new-password, old-password, base-url }
+   required { api-key, session-id, confirmation-id, base-url }
    fullurl = url base-url, \confirm-email
    err, resp <-! superagent.post(fullurl).send({ confirmation-id, transport }).set(\api-key, api-key).set(\sid, session-id).end
    delete confirm-url.loading
