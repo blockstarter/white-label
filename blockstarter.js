@@ -153,7 +153,9 @@
     fullurl = url(baseUrl, 'forgot-password');
     return superagent.post(fullurl).send({
       returnUrl: returnUrl,
-      transport: transport
+      transport: transport,
+      email: email,
+      project: project
     }).set('api-key', apiKey).end(function(err, resp){
       delete forgotPassword.loading;
       if (err != null) {

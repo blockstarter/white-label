@@ -77,7 +77,7 @@ export forgot-password = ({ return-url, transport, api-key, email, project, base
    forgot-password.loading = yes
    required { return-url, api-key, email, project, base-url }
    fullurl = url base-url, \forgot-password
-   err, resp <-! superagent.post fullurl .send { return-url, transport } .set(\api-key, api-key) .end
+   err, resp <-! superagent.post fullurl .send { return-url, transport, email, project } .set(\api-key, api-key) .end
    delete forgot-password.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)
