@@ -59,6 +59,18 @@ export change-password = (storage, cb)->
    delete change-password.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)
+   
+export update-profile = (storage, cb)->
+   { api-key, session-id, new-password, old-password, username, email, address, transport, base-url, is-browser } = storage
+   return cb "Already in process" if update-profile.loading is yes and is-browser
+   update-profile.loading = yes
+   required { api-key, session-id, base-url }
+   fullurl = url base-url, \update-profile
+   err, resp <-! superagent.post(fullurl).send({ new-password, old-password, username, email, address, transport }).set(\api-key, api-key).set(\sid, session-id).end
+   delete update-profile.loading
+   return cb err if err?
+   cb null, JSON.parse(resp.text)
+
 
 export contributors = (storage, cb)->
    { api-key, project, base-url, is-browser } = storage

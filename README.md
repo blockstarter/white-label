@@ -16,6 +16,7 @@ npm i blockstarter-wl
 * forgotPassword
 * resetPassword
 * changePassword
+* updateProfile (almost like changePassword but can update `email`, `username`, `address` optionaly)
 * panel
 * address
 * contributors
