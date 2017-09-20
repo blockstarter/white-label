@@ -177,7 +177,7 @@
       newPassword: newPassword,
       baseUrl: baseUrl
     });
-    fullurl = url(baseUrl, 'forgot-password');
+    fullurl = url(baseUrl, 'reset-password');
     return superagent.post(fullurl).send({
       restoreKey: restoreKey,
       newPassword: newPassword,
