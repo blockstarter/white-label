@@ -94,10 +94,10 @@
   out$.confirmEmail = confirmEmail = function(storage, cb){
     var apiKey, sessionId, confirmationId, transport, baseUrl, isBrowser, fullurl;
     apiKey = storage.apiKey, sessionId = storage.sessionId, confirmationId = storage.confirmationId, transport = storage.transport, baseUrl = storage.baseUrl, isBrowser = storage.isBrowser;
-    if (confirmUrl.loading === true && isBrowser) {
+    if (confirmEmail.loading === true && isBrowser) {
       return cb("Already in process");
     }
-    confirmUrl.loading = true;
+    confirmEmail.loading = true;
     required({
       apiKey: apiKey,
       sessionId: sessionId,
@@ -109,7 +109,7 @@
       confirmationId: confirmationId,
       transport: transport
     }).set('api-key', apiKey).set('sid', sessionId).end(function(err, resp){
-      delete confirmUrl.loading;
+      delete confirmEmail.loading;
       if (err != null) {
         return cb(err);
       }
