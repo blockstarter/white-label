@@ -32,7 +32,7 @@ export address = ({ session-id, dashboard, type, api-key, is-browser, base-url }
     if dashboard?
        address = dashboard.user.profile["#{type}-address"]
        return cb null, address if address
-    err, resp <-! sid-based "get new-address/#type", { session-id, api-key, is-browser, base-url }
+    err, resp <-! sid-based "post address", { session-id, api-key, is-browser, base-url, type }
     return cb err if err?
     if dashboard?
        dashboard.user.profile["#{type}-address"] = resp.address
@@ -43,7 +43,7 @@ export auth = (form, cb)->
    return cb "Already in process" if auth.loading is yes and is-browser
    auth.loading = yes
    required { base-url, email, password, confirm-url }
-   fullurl = url base-url, \crowdsale/start
+   fullurl = url base-url, \auth
    err, resp <-! superagent.post fullurl .send form .end
    delete auth.loading
    return cb err if err?
@@ -117,7 +117,7 @@ export reset-password = ({ restore-key, new-password, transport, api-key, base-u
    return cb err if err?
    cb null, JSON.parse(resp.text)
 
-export panel = sid-based 'get contribution-panel'
+export panel = sid-based 'post panel'
 
 export help-me = sid-based 'post help-me'
     

@@ -54,11 +54,12 @@
         return cb(null, address);
       }
     }
-    return sidBased("get new-address/" + type, {
+    return sidBased("post address", {
       sessionId: sessionId,
       apiKey: apiKey,
       isBrowser: isBrowser,
-      baseUrl: baseUrl
+      baseUrl: baseUrl,
+      type: type
     }, function(err, resp){
       if (err != null) {
         return cb(err);
@@ -82,7 +83,7 @@
       password: password,
       confirmUrl: confirmUrl
     });
-    fullurl = url(baseUrl, 'crowdsale/start');
+    fullurl = url(baseUrl, 'auth');
     return superagent.post(fullurl).send(form).end(function(err, resp){
       delete auth.loading;
       if (err != null) {
@@ -246,7 +247,7 @@
       cb(null, JSON.parse(resp.text));
     });
   };
-  out$.panel = panel = sidBased('get contribution-panel');
+  out$.panel = panel = sidBased('post panel');
   out$.helpMe = helpMe = sidBased('post help-me');
   function curry$(f, bound){
     var context,
