@@ -49,6 +49,17 @@ export auth = (form, cb)->
    return cb err if err?
    cb null, JSON.parse(resp.text)
    
+export logout = (form, cb)->
+   { session-id, is-browser } = form
+   return cb "Already in process" if logout.loading is yes and is-browser
+   logout.loading = yes
+   required { session-id }
+   fullurl = url base-url, \logout
+   err, resp <-! superagent.post fullurl .send form .end
+   delete logout.loading
+   return cb err if err?
+   cb null, JSON.parse(resp.text)
+   
 export confirm-email = (storage, cb)->
    { api-key, session-id, confirmation-id, transport, base-url, is-browser } = storage
    return cb "Already in process" if confirm-email.loading is yes and is-browser

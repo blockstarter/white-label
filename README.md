@@ -13,6 +13,7 @@ npm i blockstarter-wl
 ## Available functions 
 
 * auth
+* logout
 * confirmEmail
 * forgotPassword
 * resetPassword
@@ -74,6 +75,11 @@ blockstarter.auth({
 });
 
 ```
+
+### Logout
+
+Remove sessionId from the system
+
 
 #### Confirm Email
 
