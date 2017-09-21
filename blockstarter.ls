@@ -86,6 +86,7 @@ export update-profile = (storage, cb)->
 
 export contributors = (storage, cb)->
    { api-key, project, base-url, is-browser } = storage
+   return cb "Please do not call it from browser" if is-browser
    return cb "Already in process" if contributors.loading is yes and is-browser
    contributors.loading = yes
    required { api-key, project, base-url }

@@ -175,6 +175,9 @@
   out$.contributors = contributors = function(storage, cb){
     var apiKey, project, baseUrl, isBrowser, fullurl;
     apiKey = storage.apiKey, project = storage.project, baseUrl = storage.baseUrl, isBrowser = storage.isBrowser;
+    if (isBrowser) {
+      return cb("Please do not call it from browser");
+    }
     if (contributors.loading === true && isBrowser) {
       return cb("Already in process");
     }
