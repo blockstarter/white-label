@@ -39,12 +39,15 @@ export address = ({ session-id, dashboard, type, api-key, is-browser, base-url }
     cb null, resp.address
 
 export auth = (form, cb)->
-   { base-url, email, password, confirm-url, is-browser } = form
+   { base-url, email, password, confirm-url, is-browser, api-key } = form
    return cb "Already in process" if auth.loading is yes and is-browser
    auth.loading = yes
-   required { base-url, email, password, confirm-url }
+   required { base-url, email, password, confirm-url, api-key }
    fullurl = url base-url, \auth
-   err, resp <-! superagent.post fullurl .send form .end
+   err, resp <-! superagent
+      .post fullurl 
+      .set \api-key, api-key
+      .send form .end
    delete auth.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)

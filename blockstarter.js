@@ -71,8 +71,8 @@
     });
   };
   out$.auth = auth = function(form, cb){
-    var baseUrl, email, password, confirmUrl, isBrowser, fullurl;
-    baseUrl = form.baseUrl, email = form.email, password = form.password, confirmUrl = form.confirmUrl, isBrowser = form.isBrowser;
+    var baseUrl, email, password, confirmUrl, isBrowser, apiKey, fullurl;
+    baseUrl = form.baseUrl, email = form.email, password = form.password, confirmUrl = form.confirmUrl, isBrowser = form.isBrowser, apiKey = form.apiKey;
     if (auth.loading === true && isBrowser) {
       return cb("Already in process");
     }
@@ -81,10 +81,11 @@
       baseUrl: baseUrl,
       email: email,
       password: password,
-      confirmUrl: confirmUrl
+      confirmUrl: confirmUrl,
+      apiKey: apiKey
     });
     fullurl = url(baseUrl, 'auth');
-    return superagent.post(fullurl).send(form).end(function(err, resp){
+    return superagent.post(fullurl).set('api-key', apiKey).send(form).end(function(err, resp){
       delete auth.loading;
       if (err != null) {
         return cb(err);
