@@ -39,7 +39,7 @@ export address = ({ session-id, dashboard, type, api-key, is-browser, base-url }
     data = JSON.parse(resp.text)
     if dashboard?
        dashboard.user.profile["#{type}-address"] = data.address
-    cb null, data
+    cb null, data.address
 
 export auth = (form, cb)->
    { base-url, email, password, confirm-url, is-browser, api-key } = form

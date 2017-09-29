@@ -66,7 +66,7 @@
       if (dashboard != null) {
         dashboard.user.profile[type + "-address"] = data.address;
       }
-      cb(null, data);
+      cb(null, data.address);
     });
   };
   out$.auth = auth = function(form, cb){
