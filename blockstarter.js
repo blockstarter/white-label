@@ -37,7 +37,7 @@
   });
   support = ['btc', 'ltc', 'dash', 'doge', 'eth', 'waves', 'zec'];
   out$.address = address = function(arg$, cb){
-    var sessionId, dashboard, type, apiKey, isBrowser, baseUrl, address;
+    var sessionId, dashboard, type, apiKey, isBrowser, baseUrl, address, fullurl;
     sessionId = arg$.sessionId, dashboard = arg$.dashboard, type = arg$.type, apiKey = arg$.apiKey, isBrowser = arg$.isBrowser, baseUrl = arg$.baseUrl;
     required({
       sessionId: sessionId,
@@ -54,13 +54,10 @@
         return cb(null, address);
       }
     }
-    return sidBased("post address", {
-      sessionId: sessionId,
-      apiKey: apiKey,
-      isBrowser: isBrowser,
-      baseUrl: baseUrl,
+    fullurl = url(baseUrl, 'address');
+    return superagent.post(fullurl).send({
       type: type
-    }, function(err, resp){
+    }).set('api-key', apiKey).set('sid', sessionId).end(function(err, resp){
       if (err != null) {
         return cb(err);
       }

@@ -32,7 +32,9 @@ export address = ({ session-id, dashboard, type, api-key, is-browser, base-url }
     if dashboard?
        address = dashboard.user.profile["#{type}-address"]
        return cb null, address if address
-    err, resp <-! sid-based "post address", { session-id, api-key, is-browser, base-url, type }
+    
+    fullurl = url base-url, \address
+    err, resp <-! superagent.post(fullurl).send({ type }).set(\api-key, api-key).set(\sid, session-id).end
     return cb err if err?
     if dashboard?
        dashboard.user.profile["#{type}-address"] = resp.address
