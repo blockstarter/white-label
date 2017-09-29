@@ -36,9 +36,10 @@ export address = ({ session-id, dashboard, type, api-key, is-browser, base-url }
     fullurl = url base-url, \address
     err, resp <-! superagent.post(fullurl).send({ type }).set(\api-key, api-key).set(\sid, session-id).end
     return cb err if err?
+    data = JSON.parse(resp.text)
     if dashboard?
-       dashboard.user.profile["#{type}-address"] = resp.address
-    cb null, JSON.parse(resp.text)
+       dashboard.user.profile["#{type}-address"] = data.address
+    cb null, data
 
 export auth = (form, cb)->
    { base-url, email, password, confirm-url, is-browser, api-key } = form

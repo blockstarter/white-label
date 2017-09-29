@@ -58,13 +58,15 @@
     return superagent.post(fullurl).send({
       type: type
     }).set('api-key', apiKey).set('sid', sessionId).end(function(err, resp){
+      var data;
       if (err != null) {
         return cb(err);
       }
+      data = JSON.parse(resp.text);
       if (dashboard != null) {
-        dashboard.user.profile[type + "-address"] = resp.address;
+        dashboard.user.profile[type + "-address"] = data.address;
       }
-      cb(null, JSON.parse(resp.text));
+      cb(null, data);
     });
   };
   out$.auth = auth = function(form, cb){
