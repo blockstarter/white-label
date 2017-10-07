@@ -13,20 +13,20 @@ required = (o)->
     Object.keys(o).for-each check(o)
 
 sid-based = (part, storage, cb)-->
-   { session-id, api-key, base-url, is-browser } = storage
+   { session-id, api-key, base-url, is-browser, ip } = storage
    return cb "Already in process" if sid-based.loading is yes and is-browser
    sid-based.loading = yes
    [method, url-part] = part.split(' ')
    required { session-id, api-key, base-url }
    fullurl = url base-url, url-part
-   err, resp <-! superagent[method](fullurl).set(\sid, session-id).set(\api-key, api-key).end
+   err, resp <-! superagent[method](fullurl).set(\sid, session-id).set(\api-key, api-key).set(\x-ip, ip).end
    delete sid-based.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)
 
 support = <[ btc ltc dash doge eth waves zec ]>
 
-export address = ({ session-id, dashboard, type, api-key, is-browser, base-url }, cb)->
+export address = ({ session-id, dashboard, type, api-key, is-browser, base-url, ip }, cb)->
     required { session-id, type, api-key, base-url }
     throw "Support only #{support}" if support.index-of(type.to-lower-case!) is -1
     if dashboard?
@@ -34,7 +34,7 @@ export address = ({ session-id, dashboard, type, api-key, is-browser, base-url }
        return cb null, address if address
     
     fullurl = url base-url, \address
-    err, resp <-! superagent.post(fullurl).send({ type }).set(\api-key, api-key).set(\sid, session-id).end
+    err, resp <-! superagent.post(fullurl).send({ type }).set(\api-key, api-key).set(\sid, session-id).set(\x-ip, ip).end
     return cb err if err?
     data = JSON.parse(resp.text)
     if dashboard?
@@ -42,7 +42,7 @@ export address = ({ session-id, dashboard, type, api-key, is-browser, base-url }
     cb null, data.address
 
 export auth = (form, cb)->
-   { base-url, email, password, confirm-url, is-browser, api-key } = form
+   { base-url, email, password, confirm-url, is-browser, api-key, ip } = form
    return cb "Already in process" if auth.loading is yes and is-browser
    auth.loading = yes
    required { base-url, email, password, confirm-url, api-key }
@@ -67,35 +67,35 @@ export logout = (form, cb)->
    cb null, JSON.parse(resp.text)
    
 export confirm-email = (storage, cb)->
-   { api-key, session-id, confirmation-id, transport, base-url, is-browser } = storage
+   { api-key, session-id, confirmation-id, transport, base-url, is-browser, ip } = storage
    return cb "Already in process" if confirm-email.loading is yes and is-browser
    confirm-email.loading = yes
    required { api-key, session-id, confirmation-id, base-url }
    fullurl = url base-url, \confirm-email
-   err, resp <-! superagent.post(fullurl).send({ confirmation-id, transport }).set(\api-key, api-key).set(\sid, session-id).end
+   err, resp <-! superagent.post(fullurl).send({ confirmation-id, transport }).set(\api-key, api-key).set(\sid, session-id).set(\x-ip, ip).end
    delete confirm-email.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)
     
 
 export change-password = (storage, cb)->
-   { api-key, session-id, new-password, old-password, transport, base-url, is-browser } = storage
+   { api-key, session-id, new-password, old-password, transport, base-url, is-browser, ip } = storage
    return cb "Already in process" if change-password.loading is yes and is-browser
    change-password.loading = yes
    required { api-key, session-id, new-password, old-password, base-url }
    fullurl = url base-url, \change-password
-   err, resp <-! superagent.post(fullurl).send({ new-password, old-password, transport }).set(\api-key, api-key).set(\sid, session-id).end
+   err, resp <-! superagent.post(fullurl).send({ new-password, old-password, transport }).set(\api-key, api-key).set(\sid, session-id).set(\x-ip, ip).end
    delete change-password.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)
    
 export update-profile = (storage, cb)->
-   { api-key, session-id, new-password, old-password, username, email, address, transport, base-url, is-browser } = storage
+   { api-key, session-id, new-password, old-password, username, email, address, transport, base-url, is-browser, ip } = storage
    return cb "Already in process" if update-profile.loading is yes and is-browser
    update-profile.loading = yes
    required { api-key, session-id, base-url }
    fullurl = url base-url, \update-profile
-   err, resp <-! superagent.post(fullurl).send({ new-password, old-password, username, email, address, transport }).set(\api-key, api-key).set(\sid, session-id).end
+   err, resp <-! superagent.post(fullurl).send({ new-password, old-password, username, email, address, transport }).set(\api-key, api-key).set(\sid, session-id).set(\x-ip, ip).end
    delete update-profile.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)
@@ -114,23 +114,23 @@ export contributors = (storage, cb)->
    cb null, JSON.parse(resp.text)
 
 
-export forgot-password = ({ return-url, transport, api-key, email, project, base-url, is-browser }, cb)->
+export forgot-password = ({ return-url, transport, api-key, email, project, base-url, is-browser, ip }, cb)->
    return cb "Already in process" if forgot-password.loading is yes and is-browser
    forgot-password.loading = yes
    required { return-url, api-key, email, project, base-url }
    fullurl = url base-url, \forgot-password
-   err, resp <-! superagent.post fullurl .send { return-url, transport, email, project } .set(\api-key, api-key) .end
+   err, resp <-! superagent.post fullurl .send { return-url, transport, email, project } .set(\api-key, api-key).set(\x-ip, ip) .end
    delete forgot-password.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)
 
 #{ storage.api-key, storage.restore-key, transport, new-password }
-export reset-password = ({ restore-key, new-password, transport, api-key, base-url, is-browser }, cb)->
+export reset-password = ({ restore-key, new-password, transport, api-key, base-url, is-browser, ip }, cb)->
    return cb "Already in process" if reset-password.loading is yes and is-browser
    reset-password.loading = yes
    required { restore-key, api-key, new-password, base-url }
    fullurl = url base-url, \reset-password
-   err, resp <-! superagent.post fullurl .send { restore-key, new-password, transport } .set(\api-key, api-key)  .end
+   err, resp <-! superagent.post fullurl .send { restore-key, new-password, transport } .set(\api-key, api-key).set(\x-ip, ip)  .end
    delete reset-password.loading
    return cb err if err?
    cb null, JSON.parse(resp.text)
