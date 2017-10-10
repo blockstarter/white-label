@@ -114,6 +114,16 @@ export contributors = (storage, cb)->
    return cb err if err?
    cb null, JSON.parse(resp.text)
 
+export resend-confirm-email = ({ transport, api-key, base-url, is-browser, session-id }, cb)->
+   { api-key, session-id, transport, base-url, is-browser } = storage
+   return cb "Already in process" if resend-confirm-email.loading is yes and is-browser
+   resend-confirm-email.loading = yes
+   required { api-key, session-id, base-url }
+   fullurl = url base-url, \resend-confirm-email
+   err, resp <-! superagent.post(fullurl).send({ transport }).set(\api-key, api-key).set(\sid, session-id).end
+   delete resend-confirm-email.loading
+   return cb err if err?
+   cb null, JSON.parse(resp.text)
 
 export forgot-password = ({ return-url, transport, api-key, email, project, base-url, is-browser }, cb)->
    return cb "Already in process" if forgot-password.loading is yes and is-browser
