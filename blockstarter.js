@@ -215,10 +215,9 @@
       cb(null, JSON.parse(resp.text));
     });
   };
-  out$.resendConfirmEmail = resendConfirmEmail = function(arg$, cb){
-    var transport, apiKey, baseUrl, isBrowser, sessionId, fullurl;
-    transport = arg$.transport, apiKey = arg$.apiKey, baseUrl = arg$.baseUrl, isBrowser = arg$.isBrowser, sessionId = arg$.sessionId;
-    apiKey = storage.apiKey, sessionId = storage.sessionId, transport = storage.transport, baseUrl = storage.baseUrl, isBrowser = storage.isBrowser;
+  out$.resendConfirmEmail = resendConfirmEmail = function(storage, cb){
+    var apiKey, sessionId, transport, baseUrl, isBrowser, confirmUrl, fullurl;
+    apiKey = storage.apiKey, sessionId = storage.sessionId, transport = storage.transport, baseUrl = storage.baseUrl, isBrowser = storage.isBrowser, confirmUrl = storage.confirmUrl;
     if (resendConfirmEmail.loading === true && isBrowser) {
       return cb("Already in process");
     }
@@ -226,11 +225,13 @@
     required({
       apiKey: apiKey,
       sessionId: sessionId,
-      baseUrl: baseUrl
+      baseUrl: baseUrl,
+      confirmUrl: confirmUrl
     });
     fullurl = url(baseUrl, 'resend-confirm-email');
     return superagent.post(fullurl).send({
-      transport: transport
+      transport: transport,
+      confirmUrl: confirmUrl
     }).set('api-key', apiKey).set('sid', sessionId).end(function(err, resp){
       delete resendConfirmEmail.loading;
       if (err != null) {
