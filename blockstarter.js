@@ -269,8 +269,8 @@
     });
   };
   out$.resetPassword = resetPassword = function(arg$, cb){
-    var restoreKey, newPassword, transport, apiKey, baseUrl, isBrowser, fullurl;
-    restoreKey = arg$.restoreKey, newPassword = arg$.newPassword, transport = arg$.transport, apiKey = arg$.apiKey, baseUrl = arg$.baseUrl, isBrowser = arg$.isBrowser;
+    var restoreKey, newPassword, transport, apiKey, baseUrl, isBrowser, project, fullurl;
+    restoreKey = arg$.restoreKey, newPassword = arg$.newPassword, transport = arg$.transport, apiKey = arg$.apiKey, baseUrl = arg$.baseUrl, isBrowser = arg$.isBrowser, project = arg$.project;
     if (resetPassword.loading === true && isBrowser) {
       return cb("Already in process");
     }
@@ -285,7 +285,8 @@
     return superagent.post(fullurl).send({
       restoreKey: restoreKey,
       newPassword: newPassword,
-      transport: transport
+      transport: transport,
+      project: project
     }).set('api-key', apiKey).end(function(err, resp){
       delete resetPassword.loading;
       if (err != null) {
